@@ -1,24 +1,26 @@
 import { TechBlogTeam } from "./agents/teams.js";
-
+import Markdown from "react-markdown";
 import { useState } from "react";
 
 const App = () => {
   const [query, setQuery] = useState("");
   const useTeamStore = TechBlogTeam.useStore();
 
-  const { agents, workflowResult,teamWorkflowStatus, tasks } = useTeamStore((state) => ({
-    agents: state.agents,
-    workflowResult: state.workflowResult,
-    teamWorkflowStatus: state.teamWorkflowStatus,
-    tasks: state.tasks,
-  }));
+  const { agents, workflowResult, teamWorkflowStatus, tasks } = useTeamStore(
+    (state) => ({
+      agents: state.agents,
+      workflowResult: state.workflowResult,
+      teamWorkflowStatus: state.teamWorkflowStatus,
+      tasks: state.tasks,
+    })
+  );
 
   function handleStartWorkflow() {
     TechBlogTeam.start({ query });
   }
 
   return (
-    <div className="max-w-4xl mx-auto pt-10 bg-amber-400 p-4">
+    <div className="max-w-4xl mx-auto pt-10 p-4">
       <div className="flex flex-row mb-4 gap-4">
         <input
           type="text"
@@ -29,20 +31,26 @@ const App = () => {
         />
         <button
           onClick={handleStartWorkflow}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-black text-white font-bold py-2 px-4 rounded"
         >
-          Start Team Workflow
+          Create Blog
         </button>
       </div>
       <p>
         Workflow Result:{" "}
-        {workflowResult ? JSON.stringify(workflowResult) : "Not started"}
+        {typeof workflowResult === "string" ? (
+          <Markdown>{workflowResult}</Markdown>
+        ) : workflowResult ? (
+          JSON.stringify(workflowResult, null, 2)
+        ) : (
+          "Not started"
+        )}
       </p>
       <p>Workflow Status: {teamWorkflowStatus}</p>
       <div>
-        <h2>🕵️‍♂️ Agents</h2>+
+        <h2>🕵️‍♂️ Agents</h2>
         {agents.map((agent) => (
-          <div key={agent.role}>
+          <div key={agent.id}>
             <h3>
               {agent.name}--{agent.status}
             </h3>
@@ -55,7 +63,7 @@ const App = () => {
           </h2>
           {tasks.map((task) => (
             <div
-              key={task.title}
+              key={task.id}
               className="mb-4 border border-gray-200 rounded-lg bg-gray-50 p-4 shadow-sm"
             >
               <div className="flex justify-between items-center mb-2">
@@ -64,11 +72,13 @@ const App = () => {
                 </h3>
                 <span className="text-sm font-medium">{task.status}</span>
               </div>
-              <p>
-                {task.result
-                  ? JSON.stringify(task.result, null, 2)
-                  : "*Awaiting result...*"}
-              </p>
+              {typeof task.result === "string" ? (
+                <Markdown>{task.result}</Markdown>
+              ) : (
+                <pre className="whitespace-pre-wrap">
+                  {JSON.stringify(task.result, null, 2)}
+                </pre>
+              )}
             </div>
           ))}
         </div>
