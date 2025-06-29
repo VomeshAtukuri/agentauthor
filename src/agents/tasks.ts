@@ -54,15 +54,13 @@ Ensure it fits Mediums aesthetic style and promotes readability.`,
 });
 
 const githubTask = new Task({
-  description: `Publish the blog post using content and layout from task3: {taskResult:task3} on a markdown-compatible site (e.g., GitHub Pages).
+  description: `Publish the blog post using content and layout from task3: {taskResult:task3} on a GitHub repository (e.g., GitHub).
 Ensure the formatting remains intact and visually clean.`,
 
-  expectedOutput: `Deployed blog post that includes:
-- Markdown or HTML version with correct styling
-- Integrated visuals and code formatting
-- Metadata (title, summary, tags) for SEO
-- Clean, public-facing URL
-- Notes on deployment method (e.g., CI/CD, GitHub Pages)
+  expectedOutput: `A GitHub-compatible blog post including:
+- Create a nice repository name based on the context
+- Publish the blog post as a GitHub repository
+- Ensure the formatting remains intact
 - JSON format example:
 {
   "id": 1296269,

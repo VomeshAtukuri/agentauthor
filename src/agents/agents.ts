@@ -1,13 +1,13 @@
 import { Agent } from "kaibanjs";
-import { TavilyTool } from "./tools.js";
+import { TavilyTool , GitHubTool , VercelTool } from "./tools.js";
 
-// const githubTool = new GithubRepo({
-//   apiKey: import.meta.env.VITE_GITHUB_TOKEN,
-// });
+const githubTool = new GitHubTool({
+  apiKey: import.meta.env.VITE_GITHUB_API_KEY,
+});
 
-// const publicationTool = new DeploymentTool({
-//   apiKey: import.meta.env.VITE_VERCEL_TOKEN,
-// });
+const vercelTool = new VercelTool({
+  apiKey: import.meta.env.VITE_VERCEL_API_KEY,
+});
 
 const tavilyToolInstance = new TavilyTool({
   apiKey: import.meta.env.VITE_TAVILY_API_KEY,
@@ -62,7 +62,7 @@ const GitHubAgent = new Agent({
     model: "gemini-1.5-pro",
     apiKey: import.meta.env.VITE_OPENAI_API_KEY,
   },
-  // tools: [githubTool], // Use the class or a compatible instance, not the constructed object
+  tools: [githubTool], // Use the class or a compatible instance, not the constructed object
 });
 
 const PublicationAgent = new Agent({
@@ -76,7 +76,7 @@ const PublicationAgent = new Agent({
     model: "gemini-1.5-pro",
     apiKey: import.meta.env.VITE_OPENAI_API_KEY,
   },
-  // tools: [publicationTool],
+  tools: [vercelTool],
 });
 
 export { ResearchAgent, ContentAgent, UIAgent, GitHubAgent, PublicationAgent };
