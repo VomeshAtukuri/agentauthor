@@ -1,5 +1,5 @@
 import { Agent } from "kaibanjs";
-import { TavilyTool , GitHubTool , VercelTool } from "./tools.js";
+import { TavilyTool, GitHubTool, VercelTool } from "./tools.ts";
 
 const githubTool = new GitHubTool({
   apiKey: import.meta.env.VITE_GITHUB_API_KEY,
@@ -9,7 +9,7 @@ const vercelTool = new VercelTool({
   apiKey: import.meta.env.VITE_VERCEL_API_KEY,
 });
 
-const tavilyToolInstance = new TavilyTool({
+const tavilyTool = new TavilyTool({
   apiKey: import.meta.env.VITE_TAVILY_API_KEY,
 });
 
@@ -18,7 +18,7 @@ const ResearchAgent = new Agent({
   role: "The Research Agent",
   goal: "To gather reliable data from online sources.",
   background: "Expert in web research and data extraction.",
-  tools: [tavilyToolInstance],
+  tools: [tavilyTool],
   llmConfig: {
     provider: "google",
     model: "gemini-1.5-pro",
@@ -31,7 +31,7 @@ const ContentAgent = new Agent({
   role: "The Content Agent",
   goal: "To generate high-quality, context-aware content give data in json format.",
   background: "Skilled in content creation, writing, and summarization.",
-  
+
   llmConfig: {
     provider: "google",
     model: "gemini-1.5-pro",
@@ -54,9 +54,9 @@ const UIAgent = new Agent({
 const GitHubAgent = new Agent({
   name: "Github Agent",
   role: "The Github Agent",
-  goal: "To ensure content is published accurately and professionally.",
-  background:
-    "Experienced in content publishing, SEO, and deployment workflows.",
+  goal: "To ensure content is published accurately and professionally using the tool provided.",
+  background: "Experienced in publishing content into a GitHub repository.",
+  
   llmConfig: {
     provider: "google",
     model: "gemini-1.5-pro",
@@ -68,7 +68,7 @@ const GitHubAgent = new Agent({
 const PublicationAgent = new Agent({
   name: "Publication Agent",
   role: "The Publication Agent",
-  goal: "To ensure content is published accurately and professionally.",
+  goal: "To ensure content is published accurately and professionally using the tool provided.",
   background:
     "Experienced in content publishing, SEO, and deployment workflows.",
   llmConfig: {
