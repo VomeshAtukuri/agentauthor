@@ -1,6 +1,5 @@
 import { TechBlogTeam } from "./agents/teams.js";
 import Markdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
 import { useState } from "react";
 
 const App = () => {

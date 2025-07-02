@@ -1,4 +1,5 @@
 import { Task } from "kaibanjs";
+import { z } from "zod";
 import {
   ResearchAgent,
   ContentAgent,
@@ -20,18 +21,15 @@ Return the response strictly in the following JSON format:
   "content": "Full research summary including: overview, key contributors, history, trends, and cited sources."
 }
   `.trim(),
-
   expectedOutput: `
 A valid JSON object containing:
 - "title": Blog post title (string)
 - "content": Well-structured and referenced text content (string)
-Example:
-{
-  "title": "The Future of WebAssembly in 2025",
-  "content": "WebAssembly (Wasm) is a binary instruction format..."
-}
   `.trim(),
-
+  outputSchema: z.object({
+    title: z.string().describe("Blog post title"),
+    content: z.string().describe("Well-structured and referenced text content"),
+  }),
   agent: ResearchAgent,
 });
 
@@ -83,23 +81,19 @@ Make it:
 - Accessible and easy to read
   `.trim(),
   expectedOutput: `
-Return a complete HTML document, with:
-- Title tag matching the blog title
-- Semantic HTML structure (h1-h6, p, blockquote, etc.)
-- Styling placeholders (class names or inline styles ok)
-- Optional: comments suggesting where to place images or embeds
-Example:
-{
-  "name": "WebAssembly in 2025",
-  "content": "<html>
-  <head><title>The Future of WebAssembly in 2025</title></head>
-  <body>
-    <h1>The Future of WebAssembly in 2025</h1>
-    <p>WebAssembly (Wasm) is redefining...</p>
-  </body>
-</html>"
-}
+A Valid JSON object containing:
+- "repoName": The name of the GitHub repo to create
+- "content": The HTML content for a blog post and name of the repo.
   `.trim(),
+  outputSchema: z.object({
+    repoName: z
+      .string()
+      .min(1, { message: "The repository name should not be empty" })
+      .max(10, { message: "The repository name should be shorter than 10 characters" })
+      .regex(/^[a-z]+$/, { message: "The repository name should only contain lowercase letters" })
+      .describe("The name of the GitHub repo to create it should be unique and short less that 10 characters all lowercase"),
+    content: z.string().describe("The HTML content for a blog post"),
+  }),
   agent: UIAgent,
 });
 
@@ -107,26 +101,21 @@ Example:
 const githubTask = new Task({
   title: "GitHub Publishing Task",
   description: `
-You are a GitHub publishing assistant. Use the following HTML blog post (from Task 3) to:
-
-1. Create a new GitHub repository (name derived from title or use "ai-blog").
-2. Commit the HTML as an \`index.html\` file in the repo root.
-3. Ensure it's published and public.
-
-HTML content: {taskResult:task3}
+You are a GitHub publishing assistant. Use the following JSON format of {taskResult:task3} to:
+- Create a new GitHub repository using the provided repoName.
+- Commit the HTML as an \`index.html\` file in the repo root.
+- Ensure it's published and public.
   `.trim(),
 
   expectedOutput: `
 Return a valid JSON object representing the created repo:
-
-Example:
-{
-  "id": 123456789,
-  "name": "ai-blog",
-  "html_url": "https://github.com/username/ai-blog"
-}
+- "name": The name of the GitHub repo
+- "url": The URL of the GitHub repo
   `.trim(),
-
+  outputSchema: z.object({
+    name: z.string().describe("The name of the GitHub repo"),
+    url: z.string().describe("The URL of the GitHub repo"),
+  }),
   agent: GitHubAgent,
 });
 
@@ -135,20 +124,18 @@ const publicationTask = new Task({
   title: "Vercel Deployment Task",
   description: `
 You are a deployment assistant. Deploy the blog post below (from Task 4) to Vercel using the correct project and settings.
-
 HTML content: {taskResult:task4}
   `.trim(),
 
   expectedOutput: `
 A JSON object with deployment status and link:
-
-Example:
-{
-  "status": "success",
-  "url": "https://ai-blog.vercel.app"
-}
+- "status": "success" or "error"
+- "url": The URL of the deployed blog
   `.trim(),
-
+  outputSchema: z.object({
+    status: z.enum(["success", "error"]).describe("Deployment status"),
+    url: z.string().describe("The URL of the deployed blog"),
+  }),
   agent: PublicationAgent,
 });
 

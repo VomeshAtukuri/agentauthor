@@ -1,69 +1,76 @@
-# React + TypeScript + Vite
+# AgentAuthor ✍️🤖
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**AgentAuthor** is an autonomous blog-generation platform powered by multi-agent systems. Simply give a topic name, and AgentAuthor will handle everything — from research to writing, HTML generation, GitHub commits, and live publishing on Vercel. All with minimal human input.
 
-Currently, two official plugins are available:
+## 🌟 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🧠 **Research Agent**: Gathers contextual data using [Tavily API](https://www.tavily.com/).
+- 🗣️ **Content Agent**: Rewrites content to be more friendly and engaging using Google LLMs.
+- 🎨 **UI Agent**: Converts content into a full HTML blog page.
+- 🛠️ **GitHub Agent**: Pushes the generated HTML file to a GitHub repository.
+- 🚀 **Publishing Agent**: Deploys the blog to [Vercel](https://vercel.com/) for public access.
 
-## Expanding the ESLint configuration
+## ⚙️ Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React** – Frontend framework for building the user interface.
+- **Kaiban.js** – Agent orchestration and task management framework.
+- **Google API (LLMs)** – Used for content generation and rewriting.
+- **Tavily API** – Performs contextual and intelligent web search.
+- **Vercel** – For seamless blog deployment.
+- **GitHub API** – Used to commit and push blog files automatically.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🧠 How It Works
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+1. **User Input**: You provide a topic and click "Create Blog".
+2. **Tavily Agent**: Researches the topic from the web.
+3. **Content Agent**: Rewrites the researched content in a friendly, engaging tone.
+4. **UI Agent**: Generates an HTML version of the blog.
+5. **GitHub Agent**: Pushes the blog page to a GitHub repo.
+6. **Publishing Agent**: Deploys the blog to Vercel.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🤖 Understanding Kaiban.js Concepts
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Kaiban.js powers the multi-agent logic in AgentAuthor. Here's how it works:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 🧑‍🤝‍🧑 Teams
+A **Team** is a group of agents working collaboratively toward a shared goal. In AgentAuthor, teams are formed dynamically based on the task (e.g., writing a blog, publishing it).
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 🤖 Agents
+An **Agent** is an autonomous unit responsible for a specific task. Each agent has skills, tools, and a role. Examples:
+- `ResearchAgent`
+- `ContentAgent`
+- `UIAgent`
+- `GithubAgent`
+- `PublishingAgent`
+
+### 🛠️ Tools
+**Tools** are external utilities or APIs that an agent can use. For example:
+- Tavily API (used by ResearchAgent)
+- Google LLMs (used by ContentAgent)
+- GitHub API (used by GithubAgent)
+
+### 📋 Tasks
+**Tasks** are atomic units of work that agents complete. Tasks are assigned by the team or a coordinating agent. For example:
+- "Search for latest info on climate change"
+- "Rewrite paragraph to be friendly"
+- "Create an HTML page with blog content"
+- "Push file to GitHub"
+- "Deploy site to Vercel"
+
+---
+
+## 🚀 Getting Started
+
+Coming soon...
+
+(You can expand this with setup instructions, API key setup, etc.)
+
+## 🙌 Contributing
+
+Contributions are welcome! Feel free to submit issues or pull requests.
+
+## 📫 Contact
+
+For questions or collaboration, feel free to reach out.
+
+

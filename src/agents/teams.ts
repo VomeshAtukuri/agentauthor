@@ -25,7 +25,7 @@ const TechBlogTeam = new Team({
   env: {
     GOOGLE_API_KEY: import.meta.env.VITE_GOOGLE_API_KEY,
   },
-  logLevel: "warn",
+  logLevel: "debug",
 });
 
 export { TechBlogTeam };
