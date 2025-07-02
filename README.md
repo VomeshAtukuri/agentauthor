@@ -33,10 +33,13 @@
 Kaiban.js powers the multi-agent logic in AgentAuthor. Here's how it works:
 
 ### 🧑‍🤝‍🧑 Teams
+
 A **Team** is a group of agents working collaboratively toward a shared goal. In AgentAuthor, teams are formed dynamically based on the task (e.g., writing a blog, publishing it).
 
 ### 🤖 Agents
+
 An **Agent** is an autonomous unit responsible for a specific task. Each agent has skills, tools, and a role. Examples:
+
 - `ResearchAgent`
 - `ContentAgent`
 - `UIAgent`
@@ -44,25 +47,71 @@ An **Agent** is an autonomous unit responsible for a specific task. Each agent h
 - `PublishingAgent`
 
 ### 🛠️ Tools
+
 **Tools** are external utilities or APIs that an agent can use. For example:
+
 - Tavily API (used by ResearchAgent)
 - Google LLMs (used by ContentAgent)
 - GitHub API (used by GithubAgent)
 
 ### 📋 Tasks
+
 **Tasks** are atomic units of work that agents complete. Tasks are assigned by the team or a coordinating agent. For example:
+
 - "Search for latest info on climate change"
 - "Rewrite paragraph to be friendly"
 - "Create an HTML page with blog content"
 - "Push file to GitHub"
 - "Deploy site to Vercel"
 
----
-
 ## 🚀 Getting Started
 
-Coming soon...
+### Prerequisites
 
+- Node.js (v18+)
+- npm or yarn
+- GitHub account
+- Vercel account
+- API Keys for:
+  - Tavily API
+  - Google Cloud LLM
+  - GitHub Personal Access Token
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/vomeshatukuri/agentauthor.git
+cd agentauthor
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3.Set Up Environment Variables
+
+Create a .env file in the root directory and add your credentials:
+
+```bash
+TAVILY_API_KEY=your_tavily_api_key
+GOOGLE_API_KEY=your_google_llm_api_key
+GITHUB_TOKEN=your_github_personal_access_token
+VERCEL_TOKEN=your_vercel_token
+```
+
+### 4.Run the Development Server
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+The app should be running at http://localhost:3000.
 (You can expand this with setup instructions, API key setup, etc.)
 
 ## 🙌 Contributing
@@ -72,5 +121,3 @@ Contributions are welcome! Feel free to submit issues or pull requests.
 ## 📫 Contact
 
 For questions or collaboration, feel free to reach out.
-
-
