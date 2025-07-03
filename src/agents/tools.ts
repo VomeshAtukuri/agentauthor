@@ -1,51 +1,11 @@
 import { z } from "zod";
 import { Tool } from "@langchain/core/tools";
-console.log("----------------------------");
+import { TavilySearchResults } from '@kaibanjs/tools';
 
-// 🧠 Tavily Research Tool
-class TavilyTool extends Tool {
-  apiKey: string;
-  name = "Tavily Research Tool";
-  description = "This tool allows you to search for information using Tavily.";
-
-  constructor(fields: any) {
-    super(fields);
-    this.apiKey = fields?.apiKey || "";
-    this.schema = z
-      .object({
-        input: z.string().optional().describe("Describe the expected input"),
-      })
-      .transform((val) => val.input);
-  }
-
-  async _call(input: string) {
-    console.log("🔍 Tavily Search Input:", input);
-    const body = JSON.stringify({
-      query: input,
-      auto_parameters: false,
-      topic: "general",
-      search_depth: "basic",
-      chunks_per_source: 3,
-      max_results: 1,
-      days: 7,
-      include_answer: true,
-      include_raw_content: true,
-      include_images: true,
-    });
-
-    const res = await fetch("https://api.tavily.com/search", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.apiKey}`,
-      },
-      body,
-    }).then((res) => res.json());
-
-    console.log("✅ Tavily Results:", res.query, res.answer);
-    return res;
-  }
-}
+const tavilyTool = new TavilySearchResults({ 
+    apiKey: import.meta.env.VITE_TAVILY_API_KEY,
+    maxResults: 5 
+});
 
 // 🐙 GitHub Deployment Tool
 class GitHubTool extends Tool {
@@ -251,4 +211,4 @@ class VercelTool extends Tool {
 
 // main();
 
-export { TavilyTool, GitHubTool, VercelTool };
+export { tavilyTool, GitHubTool, VercelTool };

@@ -1,5 +1,5 @@
 import { Agent } from "kaibanjs";
-import { TavilyTool, GitHubTool, VercelTool } from "./tools.ts";
+import { tavilyTool, GitHubTool, VercelTool } from "./tools.ts";
 
 const githubTool = new GitHubTool({
   apiKey: import.meta.env.VITE_GITHUB_API_KEY,
@@ -7,10 +7,6 @@ const githubTool = new GitHubTool({
 
 const vercelTool = new VercelTool({
   apiKey: import.meta.env.VITE_VERCEL_API_KEY,
-});
-
-const tavilyTool = new TavilyTool({
-  apiKey: import.meta.env.VITE_TAVILY_API_KEY,
 });
 
 const ResearchAgent = new Agent({
@@ -56,7 +52,6 @@ const GitHubAgent = new Agent({
   role: "The Github Agent",
   goal: "To ensure content is published accurately and professionally using the tool provided.",
   background: "Experienced in publishing content into a GitHub repository.",
-  
   llmConfig: {
     provider: "google",
     model: "gemini-1.5-pro",
